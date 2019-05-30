@@ -1,6 +1,6 @@
 <div class="container">
     <p>
-        <a href="https://github.com/login/oauth/authorize?scope=user:email&client_id=<%= @client %>">
+        <a href="https://github.com/login/oauth/authorize?scope=user:email&client_id=<%= @client %>&redirect_uri=<%= @callback_uri%>">
             Login with Github 
         </a>
     </p>

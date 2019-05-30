@@ -2,18 +2,19 @@ class GithubApi
 
     attr_reader :access_token
 
-    def initialize(client, secret, code)
+    def initialize(client, secret, code, redirect_uri)
         @client = client
         @secret = secret
         @session_code = code
+        @redirect_uri = redirect_uri
     end
 
     # Call api for authorization token and scope
     # @return boolean
     def authenticate
         header = {'Content-Type': 'text/json'}
-        
-        params = "?client_id=#{@client}&client_secret=#{@secret}&code=#{@session_code}"
+
+        params = "?client_id=#{@client}&client_secret=#{@secret}&code=#{@session_code}&redirect_uri=#{@redirect_uri}"
         uri = URI.parse("https://github.com/login/oauth/access_token#{params}")
 
         http = Net::HTTP.new(uri.host, uri.port)
@@ -36,8 +37,8 @@ class GithubApi
 
     # Get user info
     # @return object
-    def getUserData
-        response = URI.parse("https://api.github.com/user?access_token=#{@access_token}").read
+    def get_user_data
+        response = URI.parse("https://api.github.com/user?access_token=#{@access_token}&redirect_uri=#{@redirect_uri}").read
         JSON.parse(response)
     end
 end

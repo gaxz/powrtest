@@ -1,9 +1,15 @@
 class UsersController < ApplicationController
 
+    def callback_uri
+        URI.parse(url_for(:action => 'login', :only_path => false))
+    end
+
     def index
         if session[:access_token]
             redirect_to :action => 'info'
         end
+
+        @callback_uri = self.callback_uri
         @client = Setting.getValue('github-client-id')
     end
 
@@ -19,9 +25,9 @@ class UsersController < ApplicationController
         client = Setting.getValue('github-client-id')
         secret = Setting.getValue('github-secret') 
         
-        api = GithubApi.new(client, secret, session_code)
+        api = GithubApi.new(client, secret, session_code, self.callback_uri)
 
-        if api.authenticate && user_data = api.getUserData
+        if api.authenticate && user_data = api.get_user_data
 
             # Create user or update access token if already exists
             # It appears github provides only public email from github account options
@@ -54,6 +60,9 @@ class UsersController < ApplicationController
 
     def info
         @user = User.find_by(access_token: session[:access_token])
+        if @user.blank?
+            redirect_to :action => 'index'
+        end
     end
 
     def logout
