@@ -1,24 +1,15 @@
 # README
+The application receives the token from github and saves the user data to the database and session. Re-authorization checks if user is already in database by name and updates his access token if true. 
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Ruby version
+2.6.1
 
-Things you may want to cover:
+# Rails version
+5.2.3
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+# Deployment instructions
+1. Clone repository
+2. Rails s -d (domain http://localhost:3000 required)
+2. rake db:migrate
+3. rake db:seed
+4. Thats all i hope
