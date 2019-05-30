@@ -1,5 +1,5 @@
 # README
-The application receives the token from github and saves the user data to the database. Re-authorization checks if user is already in database by name and updates his access token if true. 
+The application receives the token from github and saves the user data to the database and session. Re-authorization checks if user is already in database by name and updates his access token if true. 
 
 # Ruby version
 2.6.1
